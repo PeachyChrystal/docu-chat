@@ -6,6 +6,7 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { PromptTemplate } from "langchain/prompts";
 
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import 'dotenv/config';
 
 const chat = async (filePath = "./", query) => { // test pdf: ./uploads/hbs-lean-startup.pdf
   // load pdf file
@@ -24,7 +25,7 @@ const chat = async (filePath = "./", query) => { // test pdf: ./uploads/hbs-lean
   // set openAi api key
 
   const embeddings = new OpenAIEmbeddings({
-    openAIApiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    openAIApiKey: process.env.OPENAI_API_KEY,
   });
 
   const vectorStore = await MemoryVectorStore.fromDocuments(
@@ -34,7 +35,7 @@ const chat = async (filePath = "./", query) => { // test pdf: ./uploads/hbs-lean
 
   const model = new ChatOpenAI({
     modelName: "gpt-3.5-turbo",
-    openAIApiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    openAIApiKey: process.env.OPENAI_API_KEY,
   });
 
   const template = `Please use the given context to answer the question. 
